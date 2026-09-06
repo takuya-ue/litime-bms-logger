@@ -2,6 +2,7 @@
   "name": "litime-bms-logger",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "android": "react-native run-android",
     "start": "react-native start",

@@ -193,6 +193,10 @@ engineering, in particular:
 The response checksum documented above is not part of those notes; it was derived from
 captures taken with this app.
 
+## License
+
+Released under the [MIT License](LICENSE).
+
 ## Disclaimer
 
 This app is not an official LiTime app. The BLE protocol is based on unofficial reverse engineering. The app is intended only for reading battery information and saving logs. It is not intended to modify battery control, protection, charging, or discharging behavior.
