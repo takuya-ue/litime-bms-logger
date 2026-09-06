@@ -151,6 +151,9 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#f4f6f8',
     flex: 1,
+    // SafeAreaView only applies insets on iOS, and Android 15 draws every app
+    // edge to edge, so without this the header sits under the status bar.
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight ?? 0 : 0,
   },
   appHeader: {
     paddingHorizontal: 16,
