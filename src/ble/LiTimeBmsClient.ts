@@ -22,7 +22,7 @@ export interface BmsClientEvents {
 export function isLiTimeCandidate(device: Device): boolean {
   const name = device.name ?? device.localName ?? '';
   // Packs advertise either as LT-<model> or as L-<model code>-<serial>,
-  // e.g. L-24050BNNA70-B04714 on a 24V 50Ah unit.
+  // e.g. L-24050BNNA70-XXXXXX on a 24V 50Ah unit.
   return (
     name.startsWith('LT-') ||
     /^L-\d/.test(name) ||

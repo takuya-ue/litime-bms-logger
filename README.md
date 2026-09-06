@@ -11,7 +11,7 @@ This app is not an official LiTime app.
 LiTime Bluetooth BMS batteries. Devices are recognised when they advertise a name that:
 
 - starts with `LT-`, or
-- starts with `L-` followed by a digit (for example `L-24050BNNA70-B04714`), or
+- starts with `L-` followed by a digit (for example `L-24050BNNA70-XXXXXX`), or
 - contains `LiTime`
 
 Verified against an `L-24050BNNA70` (24 V, 8S, 50 Ah) pack.

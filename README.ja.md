@@ -11,7 +11,7 @@ LiTime BMS Logger は、LiTime の Bluetooth BMS バッテリーから BLE 経�
 LiTime の Bluetooth BMS 搭載バッテリー。以下のいずれかに該当するデバイス名をアドバタイズしている場合に認識します。
 
 - `LT-` で始まる
-- `L-` に続いて数字が来る(例: `L-24050BNNA70-B04714`)
+- `L-` に続いて数字が来る(例: `L-24050BNNA70-XXXXXX`)
 - `LiTime` を含む
 
 `L-24050BNNA70`(24 V・8直・50 Ah)で動作確認済みです。
