@@ -1,8 +1,16 @@
 # LiTime BMS Logger
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Platform: Android](https://img.shields.io/badge/platform-Android-3ddc84.svg)
+![React Native 0.77](https://img.shields.io/badge/React%20Native-0.77-61dafb.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6.svg)
+
 *[日本語版 README](README.ja.md)*
 
 LiTime BMS Logger is an Android-first React Native app for reading LiTime Bluetooth BMS battery telemetry over BLE, showing live values, saving logs locally, and exporting CSV files.
+
+It reads only. Nothing in this app writes to the BMS, so it cannot change protection
+thresholds, charging behaviour, or any other pack setting.
 
 This app is not an official LiTime app.
 
