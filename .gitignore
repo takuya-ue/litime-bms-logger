@@ -1,0 +1,48 @@
+node_modules/
+
+# Android build output
+android/.gradle/
+android/app/build/
+android/build/
+android/app/.cxx/
+android/.idea/
+.idea/
+*.iml
+
+# Local machine config
+android/local.properties
+local.properties
+
+# Signing material - never commit
+android/keystore.properties
+*.keystore
+*.jks
+
+# Packaged app
+*.apk
+*.aab
+
+# Generated JS bundle
+android/app/src/main/assets/index.android.bundle
+android/app/src/main/assets/index.android.bundle.map
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Metro / Kotlin caches
+.metro-health-check*
+.kotlin/
+
+# Test output
+coverage/
+
+# Logs and crash dumps
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.hprof
+
+.DS_Store

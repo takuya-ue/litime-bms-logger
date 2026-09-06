@@ -1,0 +1,39 @@
+{
+  "name": "litime-bms-logger",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "start": "react-native start",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/netinfo": "^11.4.1",
+    "buffer": "^6.0.3",
+    "react": "18.3.1",
+    "react-native": "0.77.3",
+    "react-native-ble-plx": "^3.2.1",
+    "react-native-fs": "^2.20.0",
+    "react-native-sqlite-storage": "^6.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native-community/cli": "15.1.3",
+    "@react-native-community/cli-platform-android": "15.1.3",
+    "@react-native/babel-preset": "0.77.3",
+    "@react-native/eslint-config": "0.77.3",
+    "@react-native/metro-config": "0.77.3",
+    "@react-native/typescript-config": "0.77.3",
+    "@types/jest": "^29.5.13",
+    "@types/react": "^18.3.5",
+    "@types/react-native-sqlite-storage": "^6.0.5",
+    "eslint": "^8.57.0",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
