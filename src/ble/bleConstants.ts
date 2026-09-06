@@ -11,4 +11,7 @@ export const QUERY_BATTERY_STATUS = Buffer.from([
 
 export const QUERY_BATTERY_STATUS_BASE64 = QUERY_BATTERY_STATUS.toString('base64');
 
-export const POLL_INTERVAL_MS = 1000;
+// Once per second kept the radio busy enough to be worth easing off; battery
+// telemetry does not move fast enough to need it. This is also the floor for
+// how often a log row can be written.
+export const POLL_INTERVAL_MS = 2000;

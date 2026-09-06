@@ -2,16 +2,17 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
+  AppState,
   PermissionsAndroid,
   Platform,
   Pressable,
-  SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import {Device} from 'react-native-ble-plx';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {BleManagerProvider, useBleManager} from './ble/BleManagerProvider';
 import {ConnectionState, LiTimeBmsClient} from './ble/LiTimeBmsClient';
 import {initDatabase} from './database/logRepository';
@@ -65,6 +66,18 @@ function AppContent() {
     };
   }, [client, manager]);
 
+  // A pack accepts one BLE connection at a time, and this app has no foreground
+  // service to justify holding it. Leaving the connection open while backgrounded
+  // locks every other app out of the battery, the official one included.
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextState => {
+      if (nextState !== 'active') {
+        client.disconnect().catch(() => {});
+      }
+    });
+    return () => subscription.remove();
+  }, [client]);
+
   const connect = async (device: Device) => {
     await client.connect(device);
     setTab('dashboard');
@@ -102,7 +115,7 @@ function AppContent() {
   );
 }
 
-export default function App() {
+function AppRoot() {
   const [isReady, setIsReady] = useState(Platform.OS !== 'android');
   const [permissionDenied, setPermissionDenied] = useState(false);
 
@@ -147,13 +160,21 @@ export default function App() {
   );
 }
 
+export default function App() {
+  // SafeAreaView reads its insets from this provider. Android 15 draws every
+  // app edge to edge, so without real insets the header lands under the status
+  // bar and the dashboard buttons land under the navigation bar.
+  return (
+    <SafeAreaProvider>
+      <AppRoot />
+    </SafeAreaProvider>
+  );
+}
+
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#f4f6f8',
     flex: 1,
-    // SafeAreaView only applies insets on iOS, and Android 15 draws every app
-    // edge to edge, so without this the header sits under the status bar.
-    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight ?? 0 : 0,
   },
   appHeader: {
     paddingHorizontal: 16,

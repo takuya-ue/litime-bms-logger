@@ -16,6 +16,7 @@
     "react-native": "0.77.3",
     "react-native-ble-plx": "^3.2.1",
     "react-native-fs": "^2.20.0",
+    "react-native-safe-area-context": "^5.9.1",
     "react-native-sqlite-storage": "^6.0.1"
   },
   "devDependencies": {

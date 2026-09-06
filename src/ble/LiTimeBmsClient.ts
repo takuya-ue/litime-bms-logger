@@ -11,6 +11,9 @@ import {
 import {LiTimeFrameAssembler} from './LiTimeFrameAssembler';
 import {parseLiTimeBatteryStatus} from './LiTimeParser';
 
+const MAX_RECONNECT_ATTEMPTS = 3;
+const RECONNECT_BASE_DELAY_MS = 2000;
+
 export type ConnectionState = 'idle' | 'scanning' | 'connecting' | 'connected' | 'disconnected' | 'error';
 
 export interface BmsClientEvents {
@@ -35,8 +38,10 @@ export class LiTimeBmsClient {
   private notifySubscription?: Subscription;
   private disconnectSubscription?: Subscription;
   private pollTimer?: ReturnType<typeof setInterval>;
+  private reconnectTimer?: ReturnType<typeof setTimeout>;
   private readonly frameAssembler = new LiTimeFrameAssembler();
   private reconnecting = false;
+  private reconnectAttempts = 0;
 
   constructor(
     private readonly manager: BleManager,
@@ -56,6 +61,7 @@ export class LiTimeBmsClient {
       this.monitorNotifications();
       await this.sendQuery();
       this.startPolling();
+      this.reconnectAttempts = 0;
       this.events.onConnectionState?.('connected');
     } catch (error) {
       this.events.onConnectionState?.('error');
@@ -66,6 +72,9 @@ export class LiTimeBmsClient {
 
   async disconnect(): Promise<void> {
     this.stopPolling();
+    // A reconnect scheduled by an earlier drop would otherwise fire after this
+    // and quietly take the pack's single BLE slot back.
+    this.cancelPendingReconnect();
     this.frameAssembler.reset();
     this.notifySubscription?.remove();
     this.disconnectSubscription?.remove();
@@ -159,12 +168,35 @@ export class LiTimeBmsClient {
     }
   }
 
+  private cancelPendingReconnect(): void {
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = undefined;
+    }
+    this.reconnecting = false;
+    this.reconnectAttempts = 0;
+  }
+
+  // Packs accept a single BLE connection, so retrying forever keeps every other
+  // app - the official one included - locked out. Back off, then give up and let
+  // the user reconnect deliberately.
   private async tryReconnect(device: Device): Promise<void> {
     if (this.reconnecting) {
       return;
     }
+    if (this.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+      this.events.onError?.(
+        'Lost the connection and stopped retrying. Reconnect from the scan tab when the battery is free.',
+      );
+      return;
+    }
+
     this.reconnecting = true;
-    setTimeout(async () => {
+    this.reconnectAttempts += 1;
+    const delay = RECONNECT_BASE_DELAY_MS * this.reconnectAttempts;
+
+    this.reconnectTimer = setTimeout(async () => {
+      this.reconnectTimer = undefined;
       try {
         await this.connect(device);
       } catch {
@@ -172,6 +204,6 @@ export class LiTimeBmsClient {
       } finally {
         this.reconnecting = false;
       }
-    }, 2000);
+    }, delay);
   }
 }

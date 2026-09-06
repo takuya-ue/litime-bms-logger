@@ -6,6 +6,7 @@ import {insertLog, listLogs} from '../database/logRepository';
 import {exportLogsToCsv} from '../utils/csvExport';
 import {BatteryStatus} from '../types/BatteryStatus';
 import {ConnectionState} from '../ble/LiTimeBmsClient';
+import {POLL_INTERVAL_MS} from '../ble/bleConstants';
 
 interface Props {
   status?: BatteryStatus;
@@ -15,7 +16,7 @@ interface Props {
 
 export function DashboardScreen({status, connectionState, onDisconnect}: Props) {
   const [logging, setLogging] = useState(false);
-  const [saveIntervalMs, setSaveIntervalMs] = useState(1000);
+  const [saveIntervalMs, setSaveIntervalMs] = useState(POLL_INTERVAL_MS);
   const [message, setMessage] = useState<string>();
   const lastSavedAt = useRef(0);
 
@@ -84,9 +85,9 @@ export function DashboardScreen({status, connectionState, onDisconnect}: Props) 
           <Text style={styles.primaryButtonText}>{logging ? 'Stop Logging' : 'Start Logging'}</Text>
         </Pressable>
         <Pressable
-          style={[styles.intervalButton, saveIntervalMs === 1000 && styles.intervalButtonActive]}
-          onPress={() => setSaveIntervalMs(1000)}>
-          <Text style={styles.intervalButtonText}>1s</Text>
+          style={[styles.intervalButton, saveIntervalMs === POLL_INTERVAL_MS && styles.intervalButtonActive]}
+          onPress={() => setSaveIntervalMs(POLL_INTERVAL_MS)}>
+          <Text style={styles.intervalButtonText}>{POLL_INTERVAL_MS / 1000}s</Text>
         </Pressable>
         <Pressable
           style={[styles.intervalButton, saveIntervalMs === 5000 && styles.intervalButtonActive]}
