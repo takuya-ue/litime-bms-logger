@@ -13,6 +13,12 @@ LiTime BMS Logger は、LiTime の Bluetooth BMS バッテリーから BLE 経�
 
 **本アプリは LiTime 公式のアプリではありません。**
 
+## スクリーンショット
+
+| ダッシュボード | セル電圧 | ログ |
+| --- | --- | --- |
+| ![電圧・電流・SOC・保護ステータスのライブ表示](docs/screenshot-dashboard.png) | ![セルごとの電圧とログ記録の操作](docs/screenshot-cells.png) | ![タイムスタンプ付きの保存済みログ](docs/screenshot-logs.png) |
+
 ## 対応デバイス
 
 LiTime の Bluetooth BMS 搭載バッテリー。以下のいずれかに該当するデバイス名をアドバタイズしている場合に認識します。

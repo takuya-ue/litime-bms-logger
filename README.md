@@ -14,6 +14,12 @@ thresholds, charging behaviour, or any other pack setting.
 
 This app is not an official LiTime app.
 
+## Screenshots
+
+| Dashboard | Cell voltages | Logs |
+| --- | --- | --- |
+| ![Dashboard showing live voltage, current, SOC and protection status](docs/screenshot-dashboard.png) | ![Per-cell voltages and the logging controls](docs/screenshot-cells.png) | ![Saved log rows with timestamps](docs/screenshot-logs.png) |
+
 ## Supported Devices
 
 LiTime Bluetooth BMS batteries. Devices are recognised when they advertise a name that:
